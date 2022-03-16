@@ -34,4 +34,22 @@ You can also find well known DNS servers specified by both IPv4 and IPv6 address
 
 ## Protocols
 
+A protocol is a set of standardized rules for exchanging information over a network. Generally, we'll be talking about communication protocols, but there are other classes of protocols, like security protocols. Within communication protocols, there are protocols that maintain their connection and ones that don't. We will be talking about common protocols that we'll hear in the context of networking below.
+
+### Internet Protocol
+
+The Internet Protocol establishes a set of common rules for carrying datagrams over a particular network. It is responsible for establishing and addressing hosts, serialization and deserialization of data, and routing the data to the correct destination over an internet protocol network. This protocol serves as the base that the whole internet is built on.
+
+### Transmission Control Protocol
+
+Transmission Control Protocol is responsible for establishing and maintaining connections between hosts and transferring large chunks of data in a reliable, ordered, error checked way from one host to another. Commonly, TCP is used in conjunction with IP and forms the TCP/IP protocol suite. TCP uses the famous SYN-SYN-ACK-ACK 3-way handshake method for establishing connections to servers. This is where one host sends a `SYN`, the host on the other end replies with a `SYN-ACK` and then finally the initial host replies with an `ACK` to complete the connection.
+
+### User Datagram Protocol
+
+User Datagram Protocol is used when establishing a connecction is not necessary to send data. This is a fairly light protocol in the sense that there aren't a lot of mechanisms provided for connecting to a host or keeping the connection. This protocol is commonly used for things like DNS or NTP or as a way to bootstrap more complex protocols.
+
+### Hypertext Transfer Protocol
+
+Hypertext Transfer Protocol is the one that most people are most familiar with, this application protocol holds up the internet as we know it. Commonly associated with API endpoints, verbs like `GET` or `POST`, and status codes like `200` or `404`. It contains a series of instructions on how to connect to a particular host, transfer data, maintain connections, and receive content.
+
 ## OSI stack
