@@ -53,3 +53,17 @@ User Datagram Protocol is used when establishing a connecction is not necessary 
 Hypertext Transfer Protocol is the one that most people are most familiar with, this application protocol holds up the internet as we know it. Commonly associated with API endpoints, verbs like `GET` or `POST`, and status codes like `200` or `404`. It contains a series of instructions on how to connect to a particular host, transfer data, maintain connections, and receive content.
 
 ## OSI stack
+
+The Open Systems Interconnection (OSI) stack is a set of protocols that are used to establish communication channels between hosts on a network. The OSI stack is composed of seven layers, each of which is responsible for a specific purpose.
+
+The layers, in order are
+
+1. Physical Layer - this layer is responsible for the physical connection between the host and the network.
+2. Link Layer - this layer is responsible for reliable transmission of data frames between two hosts connected by a physical connection.
+3. Network Layer - this layer is responsible for addressing and routing data frames between hosts.
+4. Transport Layer - this layer is responsible for segmentation, acknowledgement, and retransmission of data frames. It is also responsible for multiplexing frames from different sources across a shared interconnect.
+5. Session Layer - this layer is responsible for the establishment of a connection and the maintenance of the connection.
+6. Presentation Layer - this layer is responsible for the formatting of data frames. This is commonly where encoding, encryption/decryption, and compression happen.
+7. Application Layer - this layer holds the high level APIs, such as HTTP, file transfer, etc.
+
+The OSI stack forms the basis of how each host interacts with networks that they are part of, the data being transmitted is routed down through the layers of the OSI stack on the sender side and routed up the layers on the receiver side.
