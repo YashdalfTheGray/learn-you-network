@@ -67,3 +67,5 @@ The layers, in order are
 7. Application Layer - this layer holds the high level APIs, such as HTTP, file transfer, etc.
 
 The OSI stack forms the basis of how each host interacts with networks that they are part of, the data being transmitted is routed down through the layers of the OSI stack on the sender side and routed up the layers on the receiver side.
+
+As a packet travels through this stack, the data that starts from the application layer is wrapped in headers as it goes down the stack and then unwrapped on the host side.
