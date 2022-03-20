@@ -18,6 +18,19 @@ $ ip link show
     link/ether <ipv6_address> brd ff:ff:ff:ff:ff:ff
 ```
 
+There are two links detailed in the sample output, one is a loopback link (that comes back to the host) and one is an ethernet link with the IP address specified by `<ipv6_address>`. 
+
+As part of the listing, we also see certain statuses between angle brackets, the ones that we most care about are
+
+- `LOOPBACK` - this link serves as loopback
+- `UP` - this link is active
+- `LOWER_UP` - underlying physical media is connected
+- `BROADCAST` - link contains a valid broadcast address
+- `MULTICAST` - link supports multicast
+- `NO_CARRIER` - underlying physical media is disconnected
+
+There are other properties of each link listed, like the broadcast address denoted by the `brd` address and the queue length (in packets) that the link supports. In the case of the enp0s31f6 link, the first 1000 packets will be queued, the 1001st packet will be dropped. 
+
 ## Neighbors
 
 You can use the `ip n` command to see the network neighbors that the host has recently interacted with. 
