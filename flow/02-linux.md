@@ -8,7 +8,15 @@ Linux organized the network into some primitives, links, addresses, neighbors an
 
 ## Links
 
-You can see the network links configured within the host and the IP addresses assigned to each link using `ip link show`. 
+You can see the network links configured within the host and the IP addresses assigned to each link using `ip link show`. Sample output follows, some of the IP addresses and MAC addresses are omitted.
+
+```
+$ ip link show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: enp0s31f6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP mode DEFAULT group default qlen 1000
+    link/ether <ipv6_address> brd ff:ff:ff:ff:ff:ff
+```
 
 ## Neighbors
 
