@@ -4,7 +4,7 @@ In this section, we'll be looking at how networking is configured on a linux mac
 
 We'll also be using `ping` to test connectivity.
 
-Linux organized the network into some primitives, links, addresses, neighbors and routes. Links are the network pathways connected to the different network interfaces, physical or virtual. Neighbors are simply the network neighbors that the current host has connected to in the past. Routes are the paths through links and through border devices to get to the other nodes in a larger network. 
+Linux organized the network into some primitives, links, addresses, neighbors and routes. Links are the network pathways connected to the different network interfaces, physical or virtual. Neighbors are simply the network neighbors that the current host has connected to in the past. Routes are the paths through links and through border devices to get to the other nodes in a larger network.
 
 ## Links
 
@@ -18,7 +18,7 @@ $ ip link show
     link/ether <ipv6_address> brd ff:ff:ff:ff:ff:ff
 ```
 
-There are two links detailed in the sample output, one is a loopback link (that comes back to the host) and one is an ethernet link with the IP address specified by `<ipv6_address>`. 
+There are two links detailed in the sample output, one is a loopback link (that comes back to the host) and one is an ethernet link with the IP address specified by `<ipv6_address>`.
 
 As part of the listing, we also see certain statuses between angle brackets, the ones that we most care about are
 
@@ -29,12 +29,12 @@ As part of the listing, we also see certain statuses between angle brackets, the
 - `MULTICAST` - link supports multicast
 - `NO_CARRIER` - underlying physical media is disconnected
 
-There are other properties of each link listed, like the broadcast address denoted by the `brd` address and the queue length (in packets) that the link supports. In the case of the enp0s31f6 link, the first 1000 packets will be queued, the 1001st packet will be dropped. 
+There are other properties of each link listed, like the broadcast address denoted by the `brd` address and the queue length (in packets) that the link supports. In the case of the enp0s31f6 link, the first 1000 packets will be queued, the 1001st packet will be dropped.
 
 ## Neighbors
 
-You can use the `ip n` command to see the network neighbors that the host has recently interacted with. 
+You can use the `ip n` (or `ip neigh` or `ip neighbor`) command to see the network neighbors that the host has recently interacted with. A network neighbor is a node that is connected to the same network as the host. Commonly, these would be devices on the same wireless network or devices connected via an ethernet cable to the same router.
 
 ## Routes
 
-You can use the `ip route` command to see registered routes to nodes on other networks that the host knows about. 
+You can use the `ip route` command to see registered routes to nodes on other networks that the host knows about.
