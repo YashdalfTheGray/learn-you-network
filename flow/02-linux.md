@@ -35,6 +35,16 @@ There are other properties of each link listed, like the broadcast address denot
 
 You can use the `ip n` (or `ip neigh` or `ip neighbor`) command to see the network neighbors that the host has recently interacted with. A network neighbor is a node that is connected to the same network as the host. Commonly, these would be devices on the same wireless network or devices connected via an ethernet cable to the same router.
 
+Running the command outputs the following
+
+```
+192.168.0.10 dev enp0s31f6 lladdr <device_mac_address> STALE
+192.168.0.10 dev wlp4s0 lladdr <device_mac_address> STALE
+192.168.0.239 dev enp0s31f6 lladdr <device_mac_address> REACHABLE
+192.168.0.1 dev enp0s31f6 lladdr <device_mac_address> REACHABLE
+172.17.0.2 dev docker0 lladdr <device_mac_address> DELAY
+```
+
 ## Routes
 
 You can use the `ip route` command to see registered routes to nodes on other networks that the host knows about.
