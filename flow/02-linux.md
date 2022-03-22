@@ -56,4 +56,13 @@ Additionally, for each neighbor, you can see the link that is used to get to it 
 
 ## Routes
 
-You can use the `ip route` command to see registered routes to nodes on other networks that the host knows about.
+You can use the `ip route` command to see registered routes to nodes on other networks that the host knows about. The output of the command looks like this for a particular host
+
+```
+default via 192.168.0.1 dev enp0s31f6 proto dhcp metric 100
+default via 192.168.0.1 dev wlp4s0 proto dhcp metric 600
+169.254.0.0/16 dev enp0s31f6 scope link metric 1000
+172.17.0.0/16 dev docker0 proto kernel scope link src 172.17.0.1
+192.168.0.0/24 dev enp0s31f6 proto kernel scope link src 192.168.0.50 metric 100
+192.168.0.0/24 dev wlp4s0 proto kernel scope link src 192.168.0.164 metric 600
+```
