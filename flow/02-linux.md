@@ -45,6 +45,15 @@ Running the command outputs the following
 172.17.0.2 dev docker0 lladdr <device_mac_address> DELAY
 ```
 
+Breaking this output down, we can see that the physical address (the MAC address) of the neighbor device is listed as well as the IP address that the device has been assigned by the network.
+
+Additionally, for each neighbor, you can see the link that is used to get to it and the status of that neighbor. There are several statuses that can be seen in the output, we'll go through what they mean below
+
+- `REACHABLE` - the neighbor is connected and verified
+- `STALE` - the neighbor has not recently been verified, no action to take until sending traffic to it
+- `DELAY` - a verify packet has been sent to the neighbor in the last 5 seconds but no response has been received
+- `FAILED` - the neighbor has been sent verify packets but no response has been received after maximum retries
+
 ## Routes
 
 You can use the `ip route` command to see registered routes to nodes on other networks that the host knows about.
