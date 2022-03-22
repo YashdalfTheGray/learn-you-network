@@ -33,7 +33,7 @@ There are other properties of each link listed, like the broadcast address denot
 
 ## Neighbors
 
-You can use the `ip n` (or `ip neigh` or `ip neighbor`) command to see the network neighbors that the host has recently interacted with. A network neighbor is a node that is connected to the same network as the host. Commonly, these would be devices on the same wireless network or devices connected via an ethernet cable to the same router.
+You can use the `ip n show` (or `ip neigh show` or `ip neighbor show`) command to see the network neighbors that the host has recently interacted with. A network neighbor is a node that is connected to the same network as the host. Commonly, these would be devices on the same wireless network or devices connected via an ethernet cable to the same router.
 
 Running the command outputs the following
 
@@ -56,7 +56,7 @@ Additionally, for each neighbor, you can see the link that is used to get to it 
 
 ## Routes
 
-You can use the `ip route` command to see registered routes to nodes on other networks that the host knows about. The output of the command looks like this for a particular host
+You can use the `ip route show` command to see registered routes to nodes on other networks that the host knows about. The output of the command looks like this for a particular host
 
 ```
 default via 192.168.0.1 dev enp0s31f6 proto dhcp metric 100
