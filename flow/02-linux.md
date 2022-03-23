@@ -71,6 +71,12 @@ We can learn a lot about a node's network neighborhood from the routes that are 
 
 - There is a known route to the subnet 192.168.0.0/24 that is connected to the enp0s31f6 interface. The IP address assigned to that particular link is 192.168.0.50.
 - There is another known route to the subnet 192.168.0.0/24 that is connected to the wlp4s0 interface. The IP address assigned to that particular link is 192.168.0.164.
-- We can access the docker network specified by the subnet 172.17.0.0/16 via the docker0 interface.
+- We can access the docker network specified by the subnet 172.17.0.0/16 via the docker0 interface. The IP address assigned to that link is 172.17.0.1.
 - We can access the self-assigned IP address space specified by 169.254.0.0/16 (if computers are connected to each other but not a routing or DHCP device) via the enp0s31f6 interface.
 - There are two default routes via 192.168.0.1 for the two links enp0s31f6 and wlp4s0.
+
+The next question is, "well what do these things mean?" To explain this, we're going to walk through some examples.
+
+The first example will be to ping the node 192.168.0.40 assuming that that IP address is assigned to a device and it will respond to pings. In this example, when the host pings the node, it will look up the IP address in the route table, realize that it can get through to the address using two different interfaces. It will then pick the route with the lowest metric and send the ping to the node.
+
+The second example works similar to the first one, if we wanted to access a node on docker network or the self-assigned IP subnet, we would be using different links but the same process for finding the route. Those addresses will end up on the same subnet that the route specifies and we'll use that route to access the node on the other end.
