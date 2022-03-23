@@ -66,3 +66,11 @@ default via 192.168.0.1 dev wlp4s0 proto dhcp metric 600
 192.168.0.0/24 dev enp0s31f6 proto kernel scope link src 192.168.0.50 metric 100
 192.168.0.0/24 dev wlp4s0 proto kernel scope link src 192.168.0.164 metric 600
 ```
+
+We can learn a lot about a node's network neighborhood from the routes that are displayed int his output. Starting from the bottom,
+
+- There is a known route to the subnet 192.168.0.0/24 that is connected to the enp0s31f6 interface. The IP address assigned to that particular link is 192.168.0.50.
+- There is another known route to the subnet 192.168.0.0/24 that is connected to the wlp4s0 interface. The IP address assigned to that particular link is 192.168.0.164.
+- We can access the docker network specified by the subnet 172.17.0.0/16 via the docker0 interface.
+- We can access the self-assigned IP address space specified by 169.254.0.0/16 (if computers are connected to each other but not a routing or DHCP device) via the enp0s31f6 interface.
+- There are two default routes via 192.168.0.1 for the two links enp0s31f6 and wlp4s0.
