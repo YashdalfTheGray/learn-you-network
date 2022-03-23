@@ -80,3 +80,9 @@ The next question is, "well what do these things mean?" To explain this, we're g
 The first example will be to ping the node 192.168.0.40 assuming that that IP address is assigned to a device and it will respond to pings. In this example, when the host pings the node, it will look up the IP address in the route table, realize that it can get through to the address using two different interfaces. It will then pick the route with the lowest metric and send the ping to the node.
 
 The second example works similar to the first one, if we wanted to access a node on docker network or the self-assigned IP subnet, we would be using different links but the same process for finding the route. Those addresses will end up on the same subnet that the route specifies and we'll use that route to access the node on the other end.
+
+The third example is to access a node with an address that is not listed as a route in our route table. This will use the default route through the interface with the lowest metric. It will also use the gateway for that route, in this case denoted by 192.168.0.1. For example, if we were to access something like google.com, we would use the default route because we don't have a direct route stored to Google's servers on our local route table.
+
+The gateway with the address 192.168.0.1 also has a route table and will try to look up the address space for google.com in its route table. If it doesn't find a route, it will also use its default route to pass the traffic along.
+
+Eventually, we'll find a gateway with the address space for google.com and that gateway will route our traffic to the right host. Note, that this all happens after DNS resolution so that we already know the IP address we want to get to.
