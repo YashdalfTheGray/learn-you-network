@@ -69,3 +69,9 @@ The layers, in order are
 The OSI stack forms the basis of how each host interacts with networks that they are part of, the data being transmitted is routed down through the layers of the OSI stack on the sender side and routed up the layers on the receiver side.
 
 As a packet travels through this stack, the data that starts from the application layer is wrapped in headers as it goes down the stack and then unwrapped on the host side.
+
+## Network Address Translation
+
+The IPv4 address space can provide addresses to around 4 billion devices and as the internet has grown, the IPv4 space has filled out to the point is is basically full. IETF saw this problem on the horizon and established a new IPv6 standard that can address something on the scale of 10^38 devices.
+
+While IPv6 rollout is still slow across the internet, it is happening. Until it is complete though, we still need to find a way to address all the devices we have on the internet. To that end, Network Address Translation, or NAT, was created. As mentioned above, packets that flow through the OSI model get wrapped in headers specific to the protocol. The IP header contains the destination address, the source address, and the protocol to use. The TCP header contains the source port and the destination port. The gateway into a local network will rewrite the IP and the TCP headers for outgoing packets so that they are correctly routed back to the gateway. Once the gateway gets the packet, it will rewrite the IP and the TCP headers again to send the packet to the correct destination.
