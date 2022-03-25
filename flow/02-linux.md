@@ -2,7 +2,7 @@
 
 In this section, we'll be looking at how networking is configured on a linux machine. We'll be using a utility called `ip` from the `iproute2` package. You can use your distro's package manager to search for `iproute2` package and install it.
 
-We'll also be using `ping` to test connectivity.
+We'll also be using `ping` to test connectivity and `dig` and `traceroute` to find our way around the internet.
 
 Linux organized the network into some primitives, links, addresses, neighbors and routes. Links are the network pathways connected to the different network interfaces, physical or virtual. Neighbors are simply the network neighbors that the current host has connected to in the past. Routes are the paths through links and through border devices to get to the other nodes in a larger network.
 
@@ -86,3 +86,5 @@ The third example is to access a node with an address that is not listed as a ro
 The gateway with the address 192.168.0.1 also has a route table and will try to look up the address space for google.com in its route table. If it doesn't find a route, it will also use its default route to pass the traffic along.
 
 Eventually, we'll find a gateway with the address space for google.com and that gateway will route our traffic to the right host. Note, that this all happens after DNS resolution so that we already know the IP address we want to get to.
+
+## What's in a name?
