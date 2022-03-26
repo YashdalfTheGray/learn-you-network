@@ -79,3 +79,7 @@ While IPv6 rollout is still slow across the internet, it is happening. Until it 
 The main benefit of NAT is that one IP address and port combination can be used to represent each device on a local network and the gateway can do the header rewriting as it routes traffic. The main downside is that the mapping between port and device only exists within the gateway and if a peer to peer connection is required, there is additional work to be done to make sure that the public and private addresses are known to both nodes.
 
 ## Name Servers and Root Servers
+
+So far we've only talked about IP addresses being the only way to reach hosts on the internet. If that was the case, we would still be sharing 32-bit numbers with each other rather than websites like google.com. The internet has a provision to map an IP address to a friendly name, called a domain name. When a particular host wants to talk to that domain, special directories called Domain Name Servers respond to tell you what IP a particular friendly name resolves to so that you can talk directly to that IP address. 
+
+There are also well known root servers that maintain a list of the aforementioned domain name servers. These servers serve as the the starting point for discovery when trying to figure out what domain maps to what IP address.
