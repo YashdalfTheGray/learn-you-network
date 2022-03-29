@@ -237,3 +237,30 @@ www.google.com.         300     IN      A       142.251.33.100
 ```
 
 Aha! This one has an answer. And it says, 1 answer, which tells us that www.google.com maps to 142.251.33.100. Something to note is that record is only alive for 300 seconds, or 5 minutes. This means that likely, by the time you read this, that information would have already changed. 
+
+Computers don't usually do all of this digging every time you go to www.google.com though. They just ask the nearest cache that knows about how to reach www.google.com. If we don't specify a target for the dig command, we'll get a similar, if not the same, output. 
+
+```
+$ dig www.google.com
+
+; <<>> DiG 9.16.15-Ubuntu <<>> www.google.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 35168
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 65494
+;; QUESTION SECTION:
+;www.google.com.                        IN      A
+
+;; ANSWER SECTION:
+www.google.com.         225     IN      A       142.250.217.100
+
+;; Query time: 3 msec
+;; SERVER: 127.0.0.53#53(127.0.0.53)
+;; WHEN: Mon Mar 28 18:30:44 PDT 2022
+;; MSG SIZE  rcvd: 59
+```
+
+This followup command was run a bit later after the last command in our dig chain. So the record has already changed to point to a different location and at this cache server, this record is only alive for 3 minutes and 45 seconds. 
