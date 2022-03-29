@@ -170,4 +170,70 @@ This says, the server at `a.gtld-servers.net` is an authority (NS) for `com.` an
 a.gtld-servers.net.     172800  IN      A       192.5.6.30
 ```
 
-This says, the server that has the name `a.gtld-servers.net` is located at 192.5.6.30. This record will stay alive for 2 days as well and is an A record. 
+This says, the server that has the name `a.gtld-servers.net` is located at 192.5.6.30. This record will stay alive for 2 days as well and is an A record. Now we will ask the authority server that we've just been told about for what it knows about www.google.com using `dig @192.5.6.30 www.google.com`. That output looks like the following,
+
+```
+$ dig @192.5.6.30 www.google.com
+
+; <<>> DiG 9.16.15-Ubuntu <<>> @192.5.6.30 www.google.com
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 43384
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 4, ADDITIONAL: 9
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;www.google.com.                        IN      A
+
+;; AUTHORITY SECTION:
+google.com.             172800  IN      NS      ns2.google.com.
+google.com.             172800  IN      NS      ns1.google.com.
+google.com.             172800  IN      NS      ns3.google.com.
+google.com.             172800  IN      NS      ns4.google.com.
+
+;; ADDITIONAL SECTION:
+ns2.google.com.         172800  IN      AAAA    2001:4860:4802:34::a
+ns2.google.com.         172800  IN      A       216.239.34.10
+ns1.google.com.         172800  IN      AAAA    2001:4860:4802:32::a
+ns1.google.com.         172800  IN      A       216.239.32.10
+ns3.google.com.         172800  IN      AAAA    2001:4860:4802:36::a
+ns3.google.com.         172800  IN      A       216.239.36.10
+ns4.google.com.         172800  IN      AAAA    2001:4860:4802:38::a
+ns4.google.com.         172800  IN      A       216.239.38.10
+
+;; Query time: 0 msec
+;; SERVER: 192.5.6.30#53(192.5.6.30)
+;; WHEN: Mon Mar 28 18:24:31 PDT 2022
+;; MSG SIZE  rcvd: 291
+```
+
+We see that we still get 0 answers, but we have found 4 new authorities, this time for `google.com` and their corresponding IP addresses. Maybe if we talk to one of those, we'll find out what www.google.com maps to. Running a similar command with a different target this time, we get
+
+```$ dig @216.239.34.10 www.google.com
+
+; <<>> DiG 9.16.15-Ubuntu <<>> @216.239.34.10 www.google.com
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 41526
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 512
+;; QUESTION SECTION:
+;www.google.com.                        IN      A
+
+;; ANSWER SECTION:
+www.google.com.         300     IN      A       142.251.33.100
+
+;; Query time: 11 msec
+;; SERVER: 216.239.34.10#53(216.239.34.10)
+;; WHEN: Mon Mar 28 18:26:56 PDT 2022
+;; MSG SIZE  rcvd: 59
+```
+
+Aha! This one has an answer. And it says, 1 answer, which tells us that www.google.com maps to 142.251.33.100. Something to note is that record is only alive for 300 seconds, or 5 minutes. This means that likely, by the time you read this, that information would have already changed. 
