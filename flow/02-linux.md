@@ -87,4 +87,87 @@ The gateway with the address 192.168.0.1 also has a route table and will try to 
 
 Eventually, we'll find a gateway with the address space for google.com and that gateway will route our traffic to the right host. Note, that this all happens after DNS resolution so that we already know the IP address we want to get to.
 
-## What's in a name?
+## Tracing a name to an IP
+
+In this section we'll learn about how our computers trace through multiple servers and resolve an IP address from a domain name. This is something that our computers and our networks are already configured to do but the mechanics of it are interesting to understand. We'll start with one of the root servers and try to figure out what IP address maps to www.google.com. 
+
+```
+$ dig @199.7.91.13 www.google.com
+
+; <<>> DiG 9.16.15-Ubuntu <<>> @199.7.91.13 www.google.com
+; (1 server found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 18228
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 13, ADDITIONAL: 27
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1450
+;; QUESTION SECTION:
+;www.google.com.                        IN      A
+
+;; AUTHORITY SECTION:
+com.                    172800  IN      NS      a.gtld-servers.net.
+com.                    172800  IN      NS      b.gtld-servers.net.
+com.                    172800  IN      NS      c.gtld-servers.net.
+com.                    172800  IN      NS      d.gtld-servers.net.
+com.                    172800  IN      NS      e.gtld-servers.net.
+com.                    172800  IN      NS      f.gtld-servers.net.
+com.                    172800  IN      NS      g.gtld-servers.net.
+com.                    172800  IN      NS      h.gtld-servers.net.
+com.                    172800  IN      NS      i.gtld-servers.net.
+com.                    172800  IN      NS      j.gtld-servers.net.
+com.                    172800  IN      NS      k.gtld-servers.net.
+com.                    172800  IN      NS      l.gtld-servers.net.
+com.                    172800  IN      NS      m.gtld-servers.net.
+
+;; ADDITIONAL SECTION:
+a.gtld-servers.net.     172800  IN      A       192.5.6.30
+b.gtld-servers.net.     172800  IN      A       192.33.14.30
+c.gtld-servers.net.     172800  IN      A       192.26.92.30
+d.gtld-servers.net.     172800  IN      A       192.31.80.30
+e.gtld-servers.net.     172800  IN      A       192.12.94.30
+f.gtld-servers.net.     172800  IN      A       192.35.51.30
+g.gtld-servers.net.     172800  IN      A       192.42.93.30
+h.gtld-servers.net.     172800  IN      A       192.54.112.30
+i.gtld-servers.net.     172800  IN      A       192.43.172.30
+j.gtld-servers.net.     172800  IN      A       192.48.79.30
+k.gtld-servers.net.     172800  IN      A       192.52.178.30
+l.gtld-servers.net.     172800  IN      A       192.41.162.30
+m.gtld-servers.net.     172800  IN      A       192.55.83.30
+a.gtld-servers.net.     172800  IN      AAAA    2001:503:a83e::2:30
+b.gtld-servers.net.     172800  IN      AAAA    2001:503:231d::2:30
+c.gtld-servers.net.     172800  IN      AAAA    2001:503:83eb::30
+d.gtld-servers.net.     172800  IN      AAAA    2001:500:856e::30
+e.gtld-servers.net.     172800  IN      AAAA    2001:502:1ca1::30
+f.gtld-servers.net.     172800  IN      AAAA    2001:503:d414::30
+g.gtld-servers.net.     172800  IN      AAAA    2001:503:eea3::30
+h.gtld-servers.net.     172800  IN      AAAA    2001:502:8cc::30
+i.gtld-servers.net.     172800  IN      AAAA    2001:503:39c1::30
+j.gtld-servers.net.     172800  IN      AAAA    2001:502:7094::30
+k.gtld-servers.net.     172800  IN      AAAA    2001:503:d2d::30
+l.gtld-servers.net.     172800  IN      AAAA    2001:500:d937::30
+m.gtld-servers.net.     172800  IN      AAAA    2001:501:b1f9::30
+
+;; Query time: 0 msec
+;; SERVER: 199.7.91.13#53(199.7.91.13)
+;; WHEN: Mon Mar 28 18:13:33 PDT 2022
+;; MSG SIZE  rcvd: 839
+```
+
+Here, we started with `d.root-servers.net` as our starting point and asked it what it knows about www.google.com using the command `dig @199.7.91.13 www.google.com`. This gave us the above output. The first line to pay attention to is `QUERY: 1, ANSWER: 0, AUTHORITY: 13, ADDITIONAL: 27`. This tells us that we sent 1 query, we got 0 answers, we found 13 authorities, and there are 27 additional items that we should know about. 
+
+If we look in the authority section, we see entries that look like the following,
+
+```
+com.                    172800  IN      NS      a.gtld-servers.net.
+```
+
+This says, the server at `a.gtld-servers.net` is an authority (NS) for `com.` and that record will stay alive for 2 days. In the additional section, we see corresponding entries for each authority in the authority section that look like the following,
+
+```
+a.gtld-servers.net.     172800  IN      A       192.5.6.30
+```
+
+This says, the server that has the name `a.gtld-servers.net` is located at 192.5.6.30. This record will stay alive for 2 days as well and is an A record. 
