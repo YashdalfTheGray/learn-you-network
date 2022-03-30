@@ -89,7 +89,7 @@ Eventually, we'll find a gateway with the address space for google.com and that 
 
 ## Tracing a name to an IP
 
-In this section we'll learn about how our computers trace through multiple servers and resolve an IP address from a domain name. This is something that our computers and our networks are already configured to do but the mechanics of it are interesting to understand. We'll start with one of the root servers and try to figure out what IP address maps to www.google.com. 
+In this section we'll learn about how our computers trace through multiple servers and resolve an IP address from a domain name. This is something that our computers and our networks are already configured to do but the mechanics of it are interesting to understand. We'll start with one of the root servers and try to figure out what IP address maps to www.google.com.
 
 ```
 $ dig @199.7.91.13 www.google.com
@@ -156,7 +156,7 @@ m.gtld-servers.net.     172800  IN      AAAA    2001:501:b1f9::30
 ;; MSG SIZE  rcvd: 839
 ```
 
-Here, we started with `d.root-servers.net` as our starting point and asked it what it knows about www.google.com using the command `dig @199.7.91.13 www.google.com`. This gave us the above output. The first line to pay attention to is `QUERY: 1, ANSWER: 0, AUTHORITY: 13, ADDITIONAL: 27`. This tells us that we sent 1 query, we got 0 answers, we found 13 authorities, and there are 27 additional items that we should know about. 
+Here, we started with `d.root-servers.net` as our starting point and asked it what it knows about www.google.com using the command `dig @199.7.91.13 www.google.com`. This gave us the above output. The first line to pay attention to is `QUERY: 1, ANSWER: 0, AUTHORITY: 13, ADDITIONAL: 27`. This tells us that we sent 1 query, we got 0 answers, we found 13 authorities, and there are 27 additional items that we should know about.
 
 If we look in the authority section, we see entries that look like the following,
 
@@ -236,9 +236,9 @@ www.google.com.         300     IN      A       142.251.33.100
 ;; MSG SIZE  rcvd: 59
 ```
 
-Aha! This one has an answer. And it says, 1 answer, which tells us that www.google.com maps to 142.251.33.100. Something to note is that record is only alive for 300 seconds, or 5 minutes. This means that likely, by the time you read this, that information would have already changed. 
+Aha! This one has an answer. And it says, 1 answer, which tells us that www.google.com maps to 142.251.33.100. Something to note is that record is only alive for 300 seconds, or 5 minutes. This means that likely, by the time you read this, that information would have already changed.
 
-Computers don't usually do all of this digging every time you go to www.google.com though. They just ask the nearest cache that knows about how to reach www.google.com. If we don't specify a target for the dig command, we'll get a similar, if not the same, output. 
+Computers don't usually do all of this digging every time you go to www.google.com though. They just ask the nearest cache that knows about how to reach www.google.com. If we don't specify a target for the dig command, we'll get a similar, if not the same, output.
 
 ```
 $ dig www.google.com
@@ -263,4 +263,42 @@ www.google.com.         225     IN      A       142.250.217.100
 ;; MSG SIZE  rcvd: 59
 ```
 
-This followup command was run a bit later after the last command in our dig chain. So the record has already changed to point to a different location and at this cache server, this record is only alive for 3 minutes and 45 seconds. 
+This followup command was run a bit later after the last command in our dig chain. So the record has already changed to point to a different location and at this cache server, this record is only alive for 3 minutes and 45 seconds.
+
+## Tracing your path to an IP
+
+Now that we have an IP address for a DNS name, we can actually trace through the network to find the path that our packets will use to talk to the IP address. This will be done using a utility called `traceroute`. We'll start with a DNS resolution command again just because that record could have changed. Running `dig www.google.com` provides us with the following information, that server resides at 172.217.5.4. So then running `traceroute 172.217.5.4` provides us with the following output
+
+```
+$ traceroute 172.217.5.4
+traceroute to 172.217.5.4 (172.217.5.4), 64 hops max, 52 byte packets
+ 1  gateway (192.168.1.1)  2.364 ms  2.006 ms  1.945 ms
+ 2  142-254-149-013.inf.spectrum.com (142.254.149.13)  15.150 ms  10.268 ms  10.951 ms
+ 3  lag-63.wevlohoh02h.netops.charter.com (24.95.81.41)  15.019 ms  13.758 ms  20.903 ms
+ 4  lag-88.clmcohib01r.netops.charter.com (65.29.17.66)  15.768 ms  14.965 ms  23.826 ms
+ 5  lag-27.clevohek01r.netops.charter.com (65.29.1.38)  25.520 ms  25.451 ms  24.989 ms
+ 6  lag-17.vinnva0510w-bcr00.netops.charter.com (66.109.6.70)  31.075 ms
+    lag-27.vinnva0510w-bcr00.netops.charter.com (66.109.6.66)  27.740 ms
+    lag-415.vinnva0510w-bcr00.netops.charter.com (66.109.6.12)  39.520 ms
+ 7  lag-11.asbnva1611w-bcr00.netops.charter.com (66.109.6.30)  39.990 ms  30.785 ms  43.387 ms
+ 8  72.14.214.10 (72.14.214.10)  29.871 ms
+    72.14.220.190 (72.14.220.190)  28.050 ms  50.656 ms
+ 9  * * *
+10  108.170.246.33 (108.170.246.33)  30.020 ms
+    108.170.240.97 (108.170.240.97)  33.871 ms
+    108.170.246.33 (108.170.246.33)  28.978 ms
+11  108.170.240.112 (108.170.240.112)  29.858 ms
+    108.170.246.3 (108.170.246.3)  27.856 ms
+    108.170.246.34 (108.170.246.34)  27.126 ms
+12  209.85.241.125 (209.85.241.125)  40.465 ms *
+    216.239.50.97 (216.239.50.97)  36.940 ms
+13  209.85.250.8 (209.85.250.8)  33.221 ms  52.779 ms *
+14  209.85.241.125 (209.85.241.125)  36.199 ms  34.040 ms
+    142.251.234.41 (142.251.234.41)  32.865 ms
+15  108.170.243.193 (108.170.243.193)  33.957 ms
+    108.170.243.174 (108.170.243.174)  34.687 ms
+    108.170.243.193 (108.170.243.193)  34.994 ms
+16  209.85.255.145 (209.85.255.145)  36.494 ms  35.745 ms
+    209.85.255.173 (209.85.255.173)  36.470 ms
+17  ord38s19-in-f4.1e100.net (172.217.5.4)  33.727 ms  39.614 ms  34.023 ms
+```
