@@ -212,7 +212,8 @@ ns4.google.com.         172800  IN      A       216.239.38.10
 
 We see that we still get 0 answers, but we have found 4 new authorities, this time for `google.com` and their corresponding IP addresses. Maybe if we talk to one of those, we'll find out what www.google.com maps to. Running a similar command with a different target this time, we get
 
-```$ dig @216.239.34.10 www.google.com
+```
+$ dig @216.239.34.10 www.google.com
 
 ; <<>> DiG 9.16.15-Ubuntu <<>> @216.239.34.10 www.google.com
 ; (1 server found)
@@ -302,3 +303,13 @@ traceroute to 172.217.5.4 (172.217.5.4), 64 hops max, 52 byte packets
     209.85.255.173 (209.85.255.173)  36.470 ms
 17  ord38s19-in-f4.1e100.net (172.217.5.4)  33.727 ms  39.614 ms  34.023 ms
 ```
+
+Let us study this output. The first thing to notice is this pattern,
+
+```
+# dns_name (ip_address) millis millis millis
+```
+
+This is the default traceroute output, where the first column is the hop number, the second one is the DNS name and an IP address of the hop, and the last three columns are the time it took the server at that hop to respond. Traceroute samples three data points per hop and it displays all three numbers.
+
+If for example, a device in the middle of the route is not configured to accept ICMP packets over UDP, that is likely to show up as a `*` in the middle of the output. If the traceroute stops with `*`s, then we know that something is broken in the network. Generally, if you are tracing through the internet, you shouldn't be running into broken hops unless we're in a situation where Facebook locked their network out from the internet.
