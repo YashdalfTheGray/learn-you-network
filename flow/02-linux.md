@@ -321,3 +321,13 @@ The next thing to notice is this pattern,
 This is the default traceroute output, where the first column is the hop number, the second one is the DNS name and an IP address of the hop, and the last three columns are the time it took the server at that hop to respond. Traceroute samples three data points per hop and it displays all three numbers.
 
 If for example, a device in the middle of the route is not configured to accept ICMP packets over UDP, that is likely to show up as a `*` in the middle of the output. If the traceroute stops with `*`s, then we know that something is broken in the network. Generally, if you are tracing through the internet, you shouldn't be running into broken hops unless we're in a situation where Facebook locked their network out from the internet.
+
+The next thing to note is,
+
+```
+10  108.170.246.33 (108.170.246.33)  30.020 ms
+    108.170.240.97 (108.170.240.97)  33.871 ms
+    108.170.246.33 (108.170.246.33)  28.978 ms
+```
+
+It was found that there were three different paths we could take through this hop and since we are using three tries per hop, each server was tried once.
