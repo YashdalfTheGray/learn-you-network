@@ -304,7 +304,15 @@ traceroute to 172.217.5.4 (172.217.5.4), 64 hops max, 52 byte packets
 17  ord38s19-in-f4.1e100.net (172.217.5.4)  33.727 ms  39.614 ms  34.023 ms
 ```
 
-Let us study this output. The first thing to notice is this pattern,
+Let us study this output. The first thing to notice is this header,
+
+```
+traceroute to 172.217.5.4 (172.217.5.4), 64 hops max, 52 byte packets
+```
+
+This says, we're going to use a packet size of 52 bytes, and we're going to trace the path for a maximum of 64 hops. The next line says, we're going to trace the path to the IP address that we provided.
+
+The next thing to notice is this pattern,
 
 ```
 # dns_name (ip_address) millis millis millis
