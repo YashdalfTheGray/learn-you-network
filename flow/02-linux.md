@@ -335,8 +335,8 @@ It was found that there were three different paths we could take through this ho
 Traceroute provides different configuration options to change these defaults. We can use,
 
 - the `-m` option to change the maximum number of hops
-- the `-M` option to change the minimum number of hops
 - the `-i` option to change the interface we are using for traceroute
 - the `-w` option to change the number of seconds to wait for a response
 - the `-q` option to change the number of probes to send per hop
-- the `-v` option for verbose output
+
+NOTE - these options may be different than the ones on your platform. Use `traceroute --help` and `man traceroute` to find the options for your platform.
