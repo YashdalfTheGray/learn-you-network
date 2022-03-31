@@ -331,3 +331,12 @@ The next thing to note is,
 ```
 
 It was found that there were three different paths we could take through this hop and since we are using three tries per hop, each server was tried once.
+
+Traceroute provides different configuration options to change these defaults. We can use,
+
+- the `-m` option to change the maximum number of hops
+- the `-M` option to change the minimum number of hops
+- the `-i` option to change the interface we are using for traceroute
+- the `-w` option to change the number of seconds to wait for a response
+- the `-q` option to change the number of probes to send per hop
+- the `-v` option for verbose output
